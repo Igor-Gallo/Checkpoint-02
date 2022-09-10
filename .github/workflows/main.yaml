@@ -21,10 +21,11 @@ jobs:
         wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
         unzip terraform_"$tf_version"_linux_amd64.zip
         sudo mv terraform /usr/local/bin/
+
     - name: Verify Terraform version
       run: terraform --version
 
-    - name: Set Credentials
+      - name: Set Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -32,22 +33,15 @@ jobs:
         aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
         aws-region: us-east-1
 
-
     - name: Terraform init
       run: terraform init -input=false
 
     - name: Terraform validation
       run: terraform validate
 
-- name: Deploy objects to S3 bucket
-      run: |
-        aws s3 sync ./ s3://s3-top-top-top \
-        --exclude '.git/*' \
-        --exclude '.github/*' \
-        --exclude 'README.md' \
-        --follow-symlinks \
-        --delete
-        
+    - name: Terraform plan
+      run: terraform plan
+
     - name: Terraform apply
       run: terraform apply -auto-approve -input=false
 
