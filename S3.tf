@@ -52,5 +52,6 @@ resource "aws_s3_bucket_object" "s3-top-top-top-object" {
     for_each = fileset("data/", "*")
     key      = each.value
     source   = "data/${each.value}"
+    content_type = "text/html"
 }
 
