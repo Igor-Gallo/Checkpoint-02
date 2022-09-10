@@ -1,12 +1,11 @@
-#BUCKET S3
-resource "aws_s3_bucket" "s3-top-top-top" {
-  bucket = "s3-top-top-top"
+# BUCKET S3
+resource "aws_s3_bucket" "toptoptop" {
+  bucket = "s3-toptoptop"
 }
 
-
 # POLICY S3
-resource "aws_s3_bucket_policy" "s3-top-top-top-policy" {
-  bucket = aws_s3_bucket.s3-top-top-top.id
+resource "aws_s3_bucket_policy" "toptoptop-policy" {
+  bucket = aws_s3_bucket.toptoptop.id
 
   policy      = jsonencode({
     Version   = "2012-10-17"
@@ -15,22 +14,23 @@ resource "aws_s3_bucket_policy" "s3-top-top-top-policy" {
         Effect    = "Allow",
         Principal = "*",
         Action    = "s3:GetObject",
-        Resource  = "arn:aws:s3:::s3-top-top-top/*",
+        Resource  = "arn:aws:s3:::toptoptop/*",
       }
     ]
 	})
 }
 
-resource "aws_s3_bucket_versioning" "s3-top-top-top-versioning" {
-  bucket = aws_s3_bucket.s3-top-top-top.id
+# VERSIONING S3 BUCKET
+resource "aws_s3_bucket_versioning" "toptoptop-versionamento" {
+  bucket = aws_s3_bucket.toptoptop.id
   versioning_configuration {
     status = "Enabled"
   }
 }
 
 # STATIC SITE
-resource "aws_s3_bucket_website_configuration" "s3-top-top-top-static-site" {
-  bucket = aws_s3_bucket.s3-top-top-top.id
+resource "aws_s3_bucket_website_configuration" "toptoptop-site" {
+  bucket = aws_s3_bucket.toptoptop.id
 
   index_document {
     suffix = "index.html"
@@ -42,13 +42,10 @@ resource "aws_s3_bucket_website_configuration" "s3-top-top-top-static-site" {
 }
 
 # S3 BUCKET OBJECTS
-resource "aws_s3_bucket_object" "s3-top-top-top-object" {
-    bucket       = aws_s3_bucket.s3-top-top-top.id
-    for_each     = fileset("data/", "*")
-    key          = each.value
-    source       = "data/${each.value}"
-    acl          = "public-read"
+resource "aws_s3_bucket_object" "toptoptop-objeto" {
+    bucket   = aws_s3_bucket.toptoptop.id
+    for_each = fileset("data/", "*")
+    key      = each.value
+    source   = "data/${each.value}"
     content_type = "text/html"
-    etag         = "${md5(file("data/${each.value}"))}"
 }
-
