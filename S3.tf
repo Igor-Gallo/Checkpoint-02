@@ -14,7 +14,7 @@ resource "aws_s3_bucket_policy" "s3-toptoptop" {
         Effect    = "Allow",
         Principal = "*",
         Action    = "s3:GetObject",
-        Resource  = "arn:aws:s3:::toptoptop/*",
+        Resource  = "arn:aws:s3:::s3-toptoptop/*",
       }
     ]
 	})
