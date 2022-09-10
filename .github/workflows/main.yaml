@@ -32,14 +32,6 @@ jobs:
         aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
         aws-region: us-east-1
 
-      - name: Deploy objects to S3 bucket
-      run: |
-        aws s3 sync ./ s3://s3-top-top-top \
-        --exclude '.git/*' \
-        --exclude '.github/*' \
-        --exclude 'README.md' \
-        --follow-symlinks \
-        --delete
 
     - name: Terraform init
       run: terraform init -input=false
@@ -47,6 +39,15 @@ jobs:
     - name: Terraform validation
       run: terraform validate
 
+- name: Deploy objects to S3 bucket
+      run: |
+        aws s3 sync ./ s3://s3-top-top-top \
+        --exclude '.git/*' \
+        --exclude '.github/*' \
+        --exclude 'README.md' \
+        --follow-symlinks \
+        --delete
+        
     - name: Terraform apply
       run: terraform apply -auto-approve -input=false
 
