@@ -1,4 +1,4 @@
-nname: Provisioning S3 Bucket and updating index.html
+name: Provisioning S3 Bucket and updating index.html
 
 on:
   push:
