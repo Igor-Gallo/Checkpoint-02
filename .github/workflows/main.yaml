@@ -12,15 +12,7 @@ jobs:
 
     - name: Checkout repo
       uses: actions/checkout@v1
-
-    - name: Set Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-        aws-region: us-east-1
-
+    
     - name: Install Terraform
       env:
             TERRAFORM_VERSION: "1.2.8"
@@ -33,34 +25,25 @@ jobs:
     - name: Verify Terraform version
       run: terraform --version
 
-    - name: Terraform init
-      env:
+    - name: Set Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
         aws-region: us-east-1
+
+    - name: Terraform init
       run: terraform init -input=false
 
     - name: Terraform validation
       run: terraform validate
 
      - name: Terraform plan
-      id: plan
-      if: github.event_name == 'pull_request'
-      env:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
       run: terraform plan -no-color
 
     - name: Terraform apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      env:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-        aws-region: us-east-1
-        run: terraform apply -auto-approve -input=false
+      run: terraform apply -auto-approve -input=false
 
         --exclude '.git/*' \
         --exclude '.github/*' \
