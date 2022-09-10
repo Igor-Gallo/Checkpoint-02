@@ -12,7 +12,7 @@ jobs:
 
     - name: Checkout repo
       uses: actions/checkout@v1
-    
+
     - name: Install Terraform
       env:
             TERRAFORM_VERSION: "1.2.8"
@@ -21,7 +21,6 @@ jobs:
         wget https://releases.hashicorp.com/terraform/"$tf_version"/terraform_"$tf_version"_linux_amd64.zip
         unzip terraform_"$tf_version"_linux_amd64.zip
         sudo mv terraform /usr/local/bin/
-        
     - name: Verify Terraform version
       run: terraform --version
 
@@ -39,15 +38,5 @@ jobs:
     - name: Terraform validation
       run: terraform validate
 
-     - name: Terraform plan
-      run: terraform plan -no-color
-
     - name: Terraform apply
       run: terraform apply -auto-approve -input=false
-
-        --exclude '.git/*' \
-        --exclude '.github/*' \
-        --exclude 'README.md' \
-        --exclude '.gitignore/*' \
-        --follow-symlinks \
-        --delete
