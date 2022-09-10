@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "toptoptop" {
 }
 
 # POLICY S3
-resource "aws_s3_bucket_policy" "toptoptop-policy" {
+resource "aws_s3_bucket_policy" "toptoptop" {
   bucket = aws_s3_bucket.toptoptop.id
 
   policy      = jsonencode({
