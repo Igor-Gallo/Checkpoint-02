@@ -40,3 +40,13 @@ jobs:
 
     - name: Terraform apply
       run: terraform apply -auto-approve -input=false
+
+
+      - name: Deploy objects to S3 bucket
+      run: |
+        aws s3 sync ./ s3://s3-top-top-top \
+        --exclude '.git/*' \
+        --exclude '.github/*' \
+        --exclude 'README.md' \
+        --follow-symlinks \
+        --delete
