@@ -1,11 +1,11 @@
 # BUCKET S3
-resource "aws_s3_bucket" "toptoptop" {
-  bucket = "toptoptop"
+resource "aws_s3_bucket" "s3-toptoptop" {
+  bucket = "s3-toptoptop"
 }
 
 # POLICY S3
-resource "aws_s3_bucket_policy" "toptoptop" {
-  bucket = aws_s3_bucket.toptoptop.id
+resource "aws_s3_bucket_policy" "s3-toptoptop" {
+  bucket = aws_s3_bucket.s3-toptoptop.id
 
   policy      = jsonencode({
     Version   = "2012-10-17"
@@ -21,16 +21,16 @@ resource "aws_s3_bucket_policy" "toptoptop" {
 }
 
 # VERSIONING S3 BUCKET
-resource "aws_s3_bucket_versioning" "toptoptoP" {
-  bucket = aws_s3_bucket.toptoptop.id
+resource "aws_s3_bucket_versioning" "s3-toptoptop" {
+  bucket = aws_s3_bucket.s3-toptoptop.id
   versioning_configuration {
     status = "Enabled"
   }
 }
 
 # STATIC SITE
-resource "aws_s3_bucket_website_configuration" "toptoptop" {
-  bucket = aws_s3_bucket.toptoptop.id
+resource "aws_s3_bucket_website_configuration" "s3-toptoptop" {
+  bucket = aws_s3_bucket.s3-toptoptop.id
 
   index_document {
     suffix = "index.html"
@@ -42,8 +42,8 @@ resource "aws_s3_bucket_website_configuration" "toptoptop" {
 }
 
 # S3 BUCKET OBJECTS
-resource "aws_s3_bucket_object" "toptoptop" {
-    bucket   = aws_s3_bucket.toptoptop.id
+resource "aws_s3_bucket_object" "s3-toptoptop" {
+    bucket   = aws_s3_bucket.s3-toptoptop.id
     for_each = fileset("data/", "*")
     key      = each.value
     source   = "data/${each.value}"
