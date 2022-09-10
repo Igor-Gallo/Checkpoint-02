@@ -25,7 +25,7 @@ jobs:
     - name: Verify Terraform version
       run: terraform --version
 
-      - name: Set Credentials
+    - name: Set Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
