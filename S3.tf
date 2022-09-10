@@ -3,11 +3,6 @@ resource "aws_s3_bucket" "s3-top-top-top" {
   bucket = "s3-top-top-top"
 }
 
-# ACL S3
-resource "aws_s3_bucket_acl" "s3-acl" {
-  bucket = aws_s3_bucket.s3-top-top-top.id
-  acl    = "public-read"
-}
 
 # POLICY S3
 resource "aws_s3_bucket_policy" "s3-top-top-top-policy" {
