@@ -3,6 +3,12 @@ resource "aws_s3_bucket" "s3-top-top-top" {
   bucket = "s3-top-top-top"
 }
 
+# ACL S3
+resource "aws_s3_bucket_acl" "s3-top-top-top-acl" {
+  bucket = aws_s3_bucket.s3-top-top-top.id
+  acl    = "public-read"
+}
+
 # POLICY S3
 resource "aws_s3_bucket_policy" "s3-top-top-top-policy" {
   bucket = aws_s3_bucket.s3-top-top-top.id
@@ -47,4 +53,5 @@ resource "aws_s3_bucket_object" "s3-top-top-top-object" {
     key      = each.value
     source   = "data/${each.value}"
     acl      = "public-read"
+    content_type = "text/html"
 }
