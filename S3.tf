@@ -5,7 +5,7 @@ resource "aws_s3_bucket" "toptoptop" {
 
 # POLICY S3
 resource "aws_s3_bucket_policy" "toptoptop" {
-  bucket = aws_s3_bucket.toptoptop.id
+  bucket = aws_s3_bucket.s3-toptoptop.id
 
   policy      = jsonencode({
     Version   = "2012-10-17"
@@ -22,7 +22,7 @@ resource "aws_s3_bucket_policy" "toptoptop" {
 
 # VERSIONING S3 BUCKET
 resource "aws_s3_bucket_versioning" "toptoptop-versionamento" {
-  bucket = aws_s3_bucket.toptoptop.id
+  bucket = aws_s3_bucket.s3-toptoptop.id
   versioning_configuration {
     status = "Enabled"
   }
@@ -30,7 +30,7 @@ resource "aws_s3_bucket_versioning" "toptoptop-versionamento" {
 
 # STATIC SITE
 resource "aws_s3_bucket_website_configuration" "toptoptop-site" {
-  bucket = aws_s3_bucket.toptoptop.id
+  bucket = aws_s3_bucket.s3-toptoptop.id
 
   index_document {
     suffix = "index.html"
@@ -43,7 +43,7 @@ resource "aws_s3_bucket_website_configuration" "toptoptop-site" {
 
 # S3 BUCKET OBJECTS
 resource "aws_s3_bucket_object" "toptoptop-objeto" {
-    bucket   = aws_s3_bucket.toptoptop.id
+    bucket   = aws_s3_bucket.s3-toptoptop.id
     for_each = fileset("data/", "*")
     key      = each.value
     source   = "data/${each.value}"
